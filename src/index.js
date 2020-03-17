@@ -109,3 +109,5 @@ const adcm = {
 };
 
 window.adcm = adcm;
+
+export default adcm;
