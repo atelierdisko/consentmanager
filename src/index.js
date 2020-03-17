@@ -41,36 +41,64 @@ const storage = {
  }
 };
 
-const snippetProvider = {
- iframe: (id) => {
-  return `<iframe src="https://www.googletagmanager.com/ns.html?id=${id}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+const createElement = (tag, extend) => {
+  const target = document.createElement(tag);
+  let { children = [], ...others} = extend;
+  children = Array.isArray(children) ? children : [children];
+  Object.entries(others).forEach(([k, v]) => {
+    if (typeof v === 'object') {
+      Object.assign(target[k], v);
+    } else {
+      target[k] = v;
+    }
+  });
+  children.forEach((child) => {
+    let [[k, v]] = Object.entries(child);
+    target.append(createElement(k, v));
+  });
+  return target;
+};
 
- },
- script: (id) => {
-  return `
+const provideSnippets = (id) => {
+ const snippets = [
+  {
+   insert: 'head',
+   insertFn: 'prepend',
+   element: createElement('script', {
+    innerHTML:
+      `
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
       })(window,document,'script','dataLayer', "${id}");
-    `;
- }
-};
-
-const tagProvider = {
- script: (id) => {
-  const script = document.createElement('script')
-  script.innerHTML = snippetProvider.script(id)
-
-  return script
- },
-
- noScript: (id) => {
-  const noscript = document.createElement('noscript')
-  noscript.innerHTML = snippetProvider.iframe(id)
-
-  return noscript
- },
+      `
+   }),
+  }, {
+   insert: 'body',
+   insertFn: 'append',
+   element: createElement('noscript', {
+    children: {
+     iframe: {
+      src: `https://www.googletagmanager.com/ns.html?id=${id}`,
+      height: '0',
+      width: '0',
+      style: { 'display':'none', 'visibility': 'hidden' },
+     }
+    }
+   })
+  },
+ ];
+ snippets.forEach((snippet) => {
+  const apply = () => {
+   document[snippet.insert][snippet.insertFn](snippet.element);
+  }
+  try {
+   apply();
+  } catch (err) {
+   document.addEventListener('DOMContentLoaded', apply);
+  }
+ });
 };
 
 const defaultConsents = {
@@ -82,8 +110,7 @@ const defaultConsents = {
 
 const loadGTM = (id) => {
  if (!window.adcm.intialized) {
-  document.head.insertBefore(tagProvider.script(id), document.head.childNodes[0])
-  document.body.insertBefore(tagProvider.noScript(id), document.body.childNodes[0])
+  provideSnippets(id);
   window.adcm.intialized = true;
   storage.updateDataLayer();
  }
