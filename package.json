@@ -1,7 +1,7 @@
 {
-  "name": "adtelierdisko-consentmanager",
+  "name": "@atelierdisko/consentmanager",
   "version": "1.0.0",
-  "description": "",
+  "description": "### Setup",
   "browser": "dist/adtelierdisko-consentmanager.min.js",
   "module": "dist/es/adtelierdisko-consentmanager.js",
   "files": [
@@ -15,7 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.8.7",
-    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-env": "^7.10.4",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "rollup": "^2.0.6",
     "rollup-plugin-babel": "^4.4.0",
@@ -26,5 +26,14 @@
     "> 1%",
     "ie 11",
     "ie 10"
-  ]
+  ],
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atelierdisko/consentmanager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/atelierdisko/consentmanager/issues"
+  },
+  "homepage": "https://github.com/atelierdisko/consentmanager#readme"
 }

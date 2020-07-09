@@ -18,11 +18,11 @@ const storage = {
   storage.updateDataLayer();
 
   if (storage.hasConsent("global")) {
-   loadGTM(window.adcm.gtmId)
+   loadGTM(adcm.gtmId)
   }
  },
  updateDataLayer: () => {
-  if (!window.adcm.intialized) {
+  if (!adcm.intialized) {
    return
   }
 
@@ -37,26 +37,26 @@ const storage = {
    }
   }
 
-  window.dataLayer.push({consents: data});
+  dataLayer.push({consents: data});
  }
 };
 
 const createElement = (tag, extend) => {
-  const target = document.createElement(tag);
-  let { children = [], ...others} = extend;
-  children = Array.isArray(children) ? children : [children];
-  Object.entries(others).forEach(([k, v]) => {
-    if (typeof v === 'object') {
-      Object.assign(target[k], v);
-    } else {
-      target[k] = v;
-    }
-  });
-  children.forEach((child) => {
-    let [[k, v]] = Object.entries(child);
-    target.append(createElement(k, v));
-  });
-  return target;
+ const target = document.createElement(tag);
+ let { children = [], ...others} = extend;
+ children = Array.isArray(children) ? children : [children];
+ Object.entries(others).forEach(([k, v]) => {
+  if (typeof v === 'object') {
+   Object.assign(target[k], v);
+  } else {
+   target[k] = v;
+  }
+ });
+ children.forEach((child) => {
+  let [[k, v]] = Object.entries(child);
+  target.append(createElement(k, v));
+ });
+ return target;
 };
 
 const provideSnippets = (id) => {
@@ -89,10 +89,12 @@ const provideSnippets = (id) => {
    })
   },
  ];
+
  snippets.forEach((snippet) => {
   const apply = () => {
    document[snippet.insert][snippet.insertFn](snippet.element);
-  }
+  };
+
   try {
    apply();
   } catch (err) {
@@ -101,40 +103,29 @@ const provideSnippets = (id) => {
  });
 };
 
-const defaultConsents = {
- global: {
-  id: "global",
-  checked: false
- }
-};
-
 const loadGTM = (id) => {
- if (!window.adcm.intialized) {
+ if (!adcm.intialized) {
   provideSnippets(id);
-  window.adcm.intialized = true;
+  adcm.intialized = true;
   storage.updateDataLayer();
  }
-}
+};
 
 const adcm = {
  gtmId: null,
  consents: {},
  intialized: false,
  init: (gtmId, consents) => {
-  window.adcm.gtmId = gtmId;
+  adcm.gtmId = gtmId;
 
   // load tagmanger if user has sent his consent
   if (storage.hasConsent("global")) {
    loadGTM(gtmId)
   }
 
-  // else remove?
-
  },
  setConsent: storage.setConsent,
  hasConsent: storage.hasConsent
 };
-
-window.adcm = adcm;
 
 export default adcm;
