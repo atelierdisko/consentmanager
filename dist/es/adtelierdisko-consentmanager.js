@@ -110,13 +110,9 @@ var storage = {
   setConsent: function setConsent(type, value) {
     localStorage.setItem("adcm_consent_".concat(type), value);
     storage.updateDataLayer();
-
-    if (storage.hasConsent("global")) {
-      loadGTM(adcm.gtmId);
-    }
   },
   updateDataLayer: function updateDataLayer() {
-    if (!adcm.intialized) {
+    if (!adcm.initialized) {
       return;
     }
 
@@ -210,9 +206,9 @@ var provideSnippets = function provideSnippets(id) {
 };
 
 var loadGTM = function loadGTM(id) {
-  if (!adcm.intialized) {
+  if (!adcm.initialized) {
     provideSnippets(id);
-    adcm.intialized = true;
+    adcm.initialized = true;
     storage.updateDataLayer();
   }
 };
@@ -220,13 +216,10 @@ var loadGTM = function loadGTM(id) {
 var adcm = {
   gtmId: null,
   consents: {},
-  intialized: false,
-  init: function init(gtmId, consents) {
-    adcm.gtmId = gtmId; // load tagmanger if user has sent his consent
-
-    if (storage.hasConsent("global")) {
-      loadGTM(gtmId);
-    }
+  initialized: false,
+  init: function init(gtmId) {
+    adcm.gtmId = gtmId;
+    loadGTM(gtmId);
   },
   setConsent: storage.setConsent,
   hasConsent: storage.hasConsent
