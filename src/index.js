@@ -22,14 +22,16 @@ const storage = {
    return
   }
 
-  const data = [];
+  const data = {};
 
   for (let [key, value] of Object.entries(localStorage)) {
    if (key.startsWith("adcm_consent")) {
-    data.push({
-     id: key.split("_")[2],
+    const id = key.split("_")[2];
+
+    data[id] = {
+     id: id,
      checked: value
-    });
+    };
    }
   }
 

@@ -116,7 +116,7 @@ var storage = {
       return;
     }
 
-    var data = [];
+    var data = {};
 
     for (var _i = 0, _Object$entries = Object.entries(localStorage); _i < _Object$entries.length; _i++) {
       var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -124,10 +124,11 @@ var storage = {
           value = _Object$entries$_i[1];
 
       if (key.startsWith("adcm_consent")) {
-        data.push({
-          id: key.split("_")[2],
+        var id = key.split("_")[2];
+        data[id] = {
+          id: id,
           checked: value
-        });
+        };
       }
     }
 
