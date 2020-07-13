@@ -2,8 +2,9 @@
   "name": "@atelierdisko/consentmanager",
   "version": "1.0.0",
   "description": "### Setup",
-  "browser": "dist/adtelierdisko-consentmanager.min.js",
+  "main": "dist/adtelierdisko-consentmanager.js",
   "module": "dist/es/adtelierdisko-consentmanager.js",
+  "browser": "dist/browser/adtelierdisko-consentmanager.min.js",
   "files": [
     "dist"
   ],
@@ -27,7 +28,6 @@
     "ie 11",
     "ie 10"
   ],
-  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/atelierdisko/consentmanager.git"
@@ -35,5 +35,8 @@
   "bugs": {
     "url": "https://github.com/atelierdisko/consentmanager/issues"
   },
-  "homepage": "https://github.com/atelierdisko/consentmanager#readme"
+  "homepage": "https://github.com/atelierdisko/consentmanager#readme",
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^13.0.1"
+  }
 }
