@@ -4,7 +4,6 @@
   "description": "### Setup",
   "main": "dist/adtelierdisko-consentmanager.js",
   "module": "dist/es/adtelierdisko-consentmanager.js",
-  "browser": "dist/browser/adtelierdisko-consentmanager.min.js",
   "files": [
     "dist"
   ],
@@ -14,14 +13,6 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.8.7",
-    "@babel/preset-env": "^7.10.4",
-    "@rollup/plugin-node-resolve": "^7.1.1",
-    "rollup": "^2.0.6",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-terser": "^5.3.0"
-  },
   "browserslist": [
     "last 2 version",
     "> 1%",
@@ -37,6 +28,12 @@
   },
   "homepage": "https://github.com/atelierdisko/consentmanager#readme",
   "dependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.10.4",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "rollup": "^2.0.6",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-terser": "^5.3.0",
     "@rollup/plugin-commonjs": "^13.0.1"
   }
 }

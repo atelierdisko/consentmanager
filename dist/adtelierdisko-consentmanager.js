@@ -107,9 +107,19 @@ function _nonIterableRest() {
  */
 var storage = {
   hasConsent: function hasConsent(type) {
+    if (typeof window === 'undefined') {
+      console.error('Localstorage is not available');
+      return false;
+    }
+
     return localStorage.getItem("adcm_consent_".concat(type)) == "true";
   },
   setConsent: function setConsent(type, value) {
+    if (typeof window === 'undefined') {
+      console.error('Localstorage is not available');
+      return;
+    }
+
     localStorage.setItem("adcm_consent_".concat(type), value);
     storage.updateDataLayer();
   },
@@ -120,18 +130,24 @@ var storage = {
 
     var data = {};
 
-    for (var _i = 0, _Object$entries = Object.entries(localStorage); _i < _Object$entries.length; _i++) {
-      var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
-          key = _Object$entries$_i[0],
-          value = _Object$entries$_i[1];
+    if (typeof window !== 'undefined') {
+      for (var _i = 0, _Object$entries = Object.entries(localStorage); _i < _Object$entries.length; _i++) {
+        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+            key = _Object$entries$_i[0],
+            value = _Object$entries$_i[1];
 
-      if (key.startsWith("adcm_consent")) {
+        if (!key.startsWith("adcm_consent")) {
+          continue;
+        }
+
         var id = key.split("_")[2];
         data[id] = {
           id: id,
           checked: value
         };
       }
+    } else {
+      console.error('Localstorage is not available');
     }
 
     dataLayer.push({
@@ -209,6 +225,11 @@ var provideSnippets = function provideSnippets(id) {
 };
 
 var loadGTM = function loadGTM(id) {
+  if (typeof document === 'undefined') {
+    console.error('document is not available');
+    return;
+  }
+
   if (!adcm.initialized) {
     provideSnippets(id);
     adcm.initialized = true;
