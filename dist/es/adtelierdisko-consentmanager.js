@@ -106,7 +106,7 @@ function _nonIterableRest() {
 var storage = {
   hasConsent: function hasConsent(type) {
     if (typeof window === 'undefined') {
-      console.error('Localstorage is not available');
+      console.warn('Localstorage is not available');
       return false;
     }
 
@@ -114,7 +114,7 @@ var storage = {
   },
   setConsent: function setConsent(type, value) {
     if (typeof window === 'undefined') {
-      console.error('Localstorage is not available');
+      console.warn('Localstorage is not available');
       return;
     }
 
@@ -145,7 +145,7 @@ var storage = {
         };
       }
     } else {
-      console.error('Localstorage is not available');
+      console.warn('Localstorage is not available');
     }
 
     dataLayer.push({
@@ -224,7 +224,7 @@ var provideSnippets = function provideSnippets(id) {
 
 var loadGTM = function loadGTM(id) {
   if (typeof document === 'undefined') {
-    console.error('document is not available');
+    console.warn('document is not available');
     return;
   }
 
