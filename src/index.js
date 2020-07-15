@@ -12,7 +12,7 @@
 const storage = {
   hasConsent: (type) => {
     if (typeof window === 'undefined') {
-      console.error('Localstorage is not available');
+      console.warn('Localstorage is not available');
       return false;
     }
 
@@ -20,7 +20,7 @@ const storage = {
   },
   setConsent: (type, value) => {
     if (typeof window === 'undefined') {
-      console.error('Localstorage is not available');
+      console.warn('Localstorage is not available');
       return;
     }
 
@@ -50,7 +50,7 @@ const storage = {
       }
 
     } else {
-      console.error('Localstorage is not available');
+      console.warn('Localstorage is not available');
     }
 
     dataLayer.push({consents: data});
@@ -121,7 +121,7 @@ const provideSnippets = (id) => {
 
 const loadGTM = (id) => {
   if (typeof document === 'undefined') {
-    console.error('document is not available');
+    console.warn('document is not available');
     return
   }
 
